@@ -30,4 +30,18 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    // Reactive Extensions for Async Programming
+
+    // https://github.com/ReactiveX/RxJava
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.3'
+    // https://github.com/ReactiveX/RxAndroid
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    // https://github.com/ReactiveX/RxKotlin
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+
+    // JSON
+
+    // https://github.com/google/gson
+    implementation 'com.google.code.gson:gson:2.8.5'
 }

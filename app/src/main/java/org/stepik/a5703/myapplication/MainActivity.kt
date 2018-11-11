@@ -5,6 +5,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import com.google.gson.Gson
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+
+const val URL_FEED: String =
+    "https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Ffeeds.bbci.co.uk%2Fnews%2Frss.xml"
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,10 +25,21 @@ class MainActivity : AppCompatActivity() {
         vText.setTextColor(0xFFFFF0000.toInt())
         vText.setOnClickListener {
             Log.d("live", "MainActivity.vText.setOnClickListener")
-            val i = Intent(this, InnerActivity::class.java)
-            i.putExtra("textFromMain", vText.text)
 
-            startActivityForResult(i, 0) // startActivity(i)
+            val o = createRequest(URL_FEED)
+                .map { Gson().fromJson(it, Feed::class.java) }
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+
+            o.subscribe({
+                // result
+                Log.d("live", "MainActivity.request.result")
+                for (item in it.items) {
+                    Log.d("live", "title: ${item.title}")
+                }
+            }, {
+                // error
+                Log.d("live", "MainActivity.request.error:  ${it.message}")
+            })
         }
     }
 
@@ -62,3 +79,14 @@ class MainActivity : AppCompatActivity() {
         Log.d("live", "MainActivity.onDestroy")
     }
 }
+
+class Feed(
+    val items: ArrayList<FeedItem>
+)
+
+class FeedItem(
+    val title: String,
+    val link: String,
+    val thumbnail: String,
+    val description: String
+)
