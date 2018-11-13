@@ -4,18 +4,21 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.gson.Gson
+import com.squareup.picasso.Picasso
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 const val URL_FEED: String =
-    "https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Ffeeds.bbci.co.uk%2Fnews%2Frss.xml"
+    "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.jpl.nasa.gov%2Fmultimedia%2Frss%2Fnews.xml"
 
 class MainActivity : AppCompatActivity() {
 
@@ -106,7 +109,11 @@ class Adapter(val items: ArrayList<FeedItem>) : RecyclerView.Adapter<RecHolder>(
 class RecHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bind(item: FeedItem) {
         val vTitle = itemView.findViewById<TextView>(R.id.activity_main__title)
+        val vDesc = itemView.findViewById<TextView>(R.id.activity_main__desc)
+        val vThumb = itemView.findViewById<ImageView>(R.id.activity_main__thumb)
 
         vTitle.text = item.title
+        vDesc.text = Html.fromHtml(item.description)
+        Picasso.get().load(item.thumbnail).into(vThumb);
     }
 }
