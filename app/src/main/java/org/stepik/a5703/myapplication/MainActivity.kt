@@ -1,5 +1,7 @@
 package org.stepik.a5703.myapplication
 
+import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -115,5 +117,11 @@ class RecHolder(view: View) : RecyclerView.ViewHolder(view) {
         vTitle.text = item.title
         vDesc.text = Html.fromHtml(item.description)
         Picasso.get().load(item.thumbnail).into(vThumb);
+
+        itemView.setOnClickListener {
+            val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse(item.link)
+            vThumb.context.startActivity(i)
+        }
     }
 }
