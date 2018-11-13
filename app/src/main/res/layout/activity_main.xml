@@ -6,14 +6,8 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-    <ScrollView
+    <ListView
+            android:id="@+id/activity_main__list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <LinearLayout
-                android:id="@+id/activity_main__list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-        </LinearLayout>
-    </ScrollView>
+            android:layout_height="match_parent"/>
 </android.support.constraint.ConstraintLayout>
